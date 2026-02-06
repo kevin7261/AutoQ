@@ -10,7 +10,6 @@
  *
  * 技術特點 (Technical Features):
  * - CSS 自定義屬性（CSS Custom Properties）
- * - 響應式設計支援
  * - 主題切換能力
  * - 易於維護和更新
  * - 跨瀏覽器兼容性
@@ -57,7 +56,7 @@
    * 提供從 12px 到 36px 的完整字體大小範圍
    *
    * 設計原則：
-   * - 使用 rem 單位，支援響應式縮放
+   * - 使用 rem 單位
    * - 建立清晰的視覺層次
    * - 確保文字的可讀性和可訪問性
    * - 與 Material Design Typography 規範對齊

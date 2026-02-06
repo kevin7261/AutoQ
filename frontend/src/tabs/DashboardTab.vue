@@ -12,8 +12,8 @@
       <div class="my-bgcolor-gray-100 rounded p-4 text-start">
         <h6 class="my-title-sm-black mb-3">📊 儀表板</h6>
 
-        <div class="row">
-          <div class="col-md-6 mb-3">
+        <div class="d-flex">
+          <div class="flex-grow-1 mb-3 me-2">
             <div class="card">
               <div class="card-body">
                 <h6 class="card-title my-title-xs-gray">系統統計</h6>
@@ -31,7 +31,7 @@
             </div>
           </div>
 
-          <div class="col-md-6 mb-3">
+          <div class="flex-grow-1 mb-3">
             <div class="card">
               <div class="card-body">
                 <h6 class="card-title my-title-xs-gray">分析摘要</h6>

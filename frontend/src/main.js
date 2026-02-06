@@ -14,7 +14,7 @@
  * - Vue 3 (Composition API) - 現代化前端框架
  * - Vue Router 4 - 單頁應用路由管理
  * - Pinia - Vue 3 官方推薦的狀態管理庫
- * - Bootstrap 5 - 響應式 UI 框架
+ * - Bootstrap 5 - UI 框架
  * - Font Awesome - 圖示字體庫
  *
  * 架構設計 (Architecture Design):
@@ -74,10 +74,10 @@ import router from './router';
 
 /**
  * Bootstrap 5 CSS 框架引入
- * 提供響應式佈局系統、UI 組件和工具類
+ * 提供佈局系統、UI 組件和工具類
  * - 版本：5.3.0
  * - 路徑：'bootstrap/dist/css/bootstrap.min.css'
- * - 功能：響應式網格系統、工具類、組件樣式等
+ * - 功能：網格系統、工具類、組件樣式等
  * - 壓縮版本：min.css 提供更小的文件大小
  */
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -100,7 +100,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
  * 整合了所有組件的樣式定義
  * - 路徑：'./assets/css/common.css'
  * - 內容：自定義 CSS 變數、通用樣式類、主題配置
- * - 作用：提供統一的視覺風格和響應式設計
+ * - 作用：提供統一的視覺風格
  */
 import './assets/css/common.css';
 
@@ -179,7 +179,7 @@ app.use(router);
  * 註冊 Pinia 狀態管理系統
  * 啟用全域狀態管理功能，支援：
  * - 集中式狀態管理：統一管理應用程式狀態
- * - 響應式狀態更新：自動同步狀態變化到 UI
+ * - 狀態更新：自動同步狀態變化到 UI
  * - 模組化狀態組織：將狀態按功能分組管理
  * - 開發者工具支援：提供調試和開發工具
  *

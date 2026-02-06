@@ -527,50 +527,16 @@ body {
   touch-action: none; /* 禁用觸控手勢，確保拖拉正常工作 */
 }
 
-/* 🔧 垂直拖曳調整器在觸摸裝置上需要更大的觸控區域 */
-@media (hover: none) and (pointer: coarse) {
-  .my-resizer-vertical {
-    min-width: 12px; /* 觸控裝置上提供更大的觸控區域 */
-    max-width: 12px;
-  }
-}
-
 .my-resizer-vertical:hover,
 .my-resizer-vertical.my-dragging {
   min-width: 6px;
   max-width: 6px;
 }
 
-/* 🔧 觸控裝置上的垂直拖拉狀態樣式 */
-@media (hover: none) and (pointer: coarse) {
-  .my-resizer-vertical.my-dragging {
-    min-width: 12px;
-    max-width: 12px;
-    background-color: var(--my-color-blue) !important;
-  }
-}
-
-/* 🔧 水平拖曳調整器在觸摸裝置上需要更大的觸控區域 */
-@media (hover: none) and (pointer: coarse) {
-  .my-resizer-horizontal {
-    min-height: 12px; /* 觸控裝置上提供更大的觸控區域 */
-    max-height: 12px;
-  }
-}
-
 .my-resizer-horizontal:hover,
 .my-resizer-horizontal.my-dragging {
   min-height: 6px;
   max-height: 6px;
-}
-
-/* 🔧 觸控裝置上的拖拉狀態樣式 */
-@media (hover: none) and (pointer: coarse) {
-  .my-resizer-horizontal.my-dragging {
-    min-height: 12px;
-    max-height: 12px;
-    background-color: var(--my-color-blue) !important;
-  }
 }
 
 .my-resizer.my-dragging {

@@ -6,7 +6,7 @@
 [![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3.0-7952B3?style=flat-square&logo=bootstrap)](https://getbootstrap.com/)
 [![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
 
-基於 Vue 3 的 AutoQ 響應式單頁應用程式，提供**工作分頁**與**儀表板**介面，適合數據展示、工作流程與儀表板類專案。程式碼含中文註解，便於維護與擴充。
+基於 Vue 3 的 AutoQ 單頁應用程式，提供**工作分頁**與**儀表板**介面，適合數據展示、工作流程與儀表板類專案。程式碼含中文註解，便於維護與擴充。
 
 ---
 
@@ -44,7 +44,7 @@
 |------|------|
 | **技術棧** | Vue 3 Composition API、Vue Router 4、Pinia、Bootstrap 5、Font Awesome |
 | **介面** | 標題列 + Tab 切換（工作分頁 / 儀表板）+ 內容區 + 頁腳 |
-| **響應式** | 依 Bootstrap 斷點適配桌面、平板、手機 |
+| **版面** | 固定版面，無 RWD 設定 |
 | **狀態管理** | Pinia store 預留擴充，可集中管理全域狀態 |
 | **程式風格** | 中文註解、ESLint、Prettier、Vue CLI 建置 |
 
@@ -109,7 +109,7 @@
 | **vue** | ^3.2.13 | 前端框架，Composition API、響應式、組件化 |
 | **vue-router** | ^4.5.1 | 單頁應用路由（History 模式、守衛、meta） |
 | **pinia** | ^2.1.0 | 狀態管理，取代 Vuex，支援 DevTools、持久化 |
-| **bootstrap** | ^5.3.0 | 響應式網格、元件、工具類、JS 元件 |
+| **bootstrap** | ^5.3.0 | 網格、元件、工具類、JS 元件 |
 | **@fortawesome/fontawesome-free** | ^6.7.2 | 圖示字體（solid / regular / brands） |
 | **core-js** | ^3.8.3 | Babel 依賴，用於 polyfill（babel.config.js 之 corejs: 3） |
 
