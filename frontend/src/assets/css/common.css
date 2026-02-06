@@ -603,3 +603,73 @@ body.my-no-select * {
 .my-cursor-pointer {
   cursor: pointer;
 }
+
+/* =============================================================================
+   📑 分頁列 (Tab Bar)
+   ============================================================================= */
+
+.my-tab-head {
+  cursor: pointer;
+}
+
+.my-tab-close-btn {
+  font-size: var(--my-font-size-md);
+  line-height: 1;
+}
+
+/* =============================================================================
+   ⏳ 載入遮罩 (Loading Overlay)
+   ============================================================================= */
+
+.my-loading-overlay-backdrop {
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 9999;
+}
+
+.my-loading-overlay-panel {
+  min-width: 300px;
+  max-width: 400px;
+}
+
+.my-loading-spinner {
+  width: 2rem;
+  height: 2rem;
+}
+
+.my-loading-progress {
+  height: 8px;
+}
+
+.my-loading-progress-bar {
+  width: var(--my-loading-progress-pct, 0);
+  transition: width 0.3s ease;
+  font-size: var(--my-font-size-xs);
+  color: var(--my-color-white);
+}
+
+/* =============================================================================
+   🔐 登入頁 (Login)
+   ============================================================================= */
+
+.my-login-card {
+  width: 100%;
+  max-width: 360px;
+}
+
+/* =============================================================================
+   📊 儀表板進度條 (Dashboard Progress)
+   ============================================================================= */
+
+.my-progress-tall {
+  height: 20px;
+}
+
+.my-progress-w-85 {
+  width: 85%;
+}
+.my-progress-w-92 {
+  width: 92%;
+}
+.my-progress-w-78 {
+  width: 78%;
+}

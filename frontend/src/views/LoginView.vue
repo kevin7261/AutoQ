@@ -18,7 +18,7 @@
 
 <template>
   <div class="d-flex flex-column vh-100 justify-content-center align-items-center my-bgcolor-gray-100">
-    <div class="card shadow-sm" style="width: 100%; max-width: 360px">
+    <div class="card shadow-sm my-login-card">
       <div class="card-body p-4">
         <h4 class="card-title mb-4 text-center">AutoQ 登入</h4>
         <form @submit.prevent="onLogin">
@@ -36,7 +36,3 @@
     </div>
   </div>
 </template>
-
-<style scoped>
-  @import '../assets/css/common.css';
-</style>

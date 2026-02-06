@@ -2,7 +2,7 @@
   /**
    * HomeView - 標題 AutoQ；右上角「工作」「儀表板」按鈕開啟 tab（工作可開多個）；tab 列可切換與個別關閉。
    */
-  import { ref, computed } from 'vue';
+  import { ref, computed, onMounted } from 'vue';
   import LoadingOverlay from '../components/LoadingOverlay.vue';
   import WorkTab from '../tabs/WorkTab.vue';
   import DashboardTab from '../tabs/DashboardTab.vue';
@@ -40,7 +40,14 @@
         }
       };
 
-      const tabLabel = (tab) => TAB_LABELS[tab.type];
+      const tabLabel = (tab) =>
+        tab.type === 'work'
+          ? `🔧 工作 #${tab.id.replace(/^tab-/, '')}`
+          : TAB_LABELS[tab.type];
+
+      onMounted(() => {
+        openTab('work');
+      });
 
       return {
         tabs,
@@ -83,15 +90,13 @@
           <ul class="nav nav-tabs nav-fill">
             <li v-for="tab in tabs" :key="tab.id" class="nav-item">
               <div
-                class="nav-link d-inline-flex align-items-center gap-1 py-2"
+                class="nav-link my-tab-head d-inline-flex align-items-center gap-1 py-2"
                 :class="{ active: activeTabId === tab.id }"
-                style="cursor: pointer"
               >
                 <span @click="switchTab(tab.id)">{{ tabLabel(tab) }}</span>
                 <button
                   type="button"
-                  class="btn btn-link p-0 border-0 text-muted text-decoration-none"
-                  style="font-size: 1rem; line-height: 1"
+                  class="btn btn-link my-tab-close-btn p-0 border-0 text-muted text-decoration-none"
                   title="關閉此分頁"
                   @click.stop="closeTab(tab.id)"
                 >
@@ -105,7 +110,7 @@
         <main class="flex-grow-1 overflow-hidden">
           <template v-for="tab in tabs" :key="tab.id">
             <div v-show="activeTabId === tab.id" class="h-100">
-              <WorkTab v-if="tab.type === 'work'" />
+              <WorkTab v-if="tab.type === 'work'" :tabId="tab.id" />
               <DashboardTab v-else-if="tab.type === 'dashboard'" />
             </div>
           </template>
@@ -114,7 +119,3 @@
     </div>
   </div>
 </template>
-
-<style>
-  @import '../assets/css/common.css';
-</style>
