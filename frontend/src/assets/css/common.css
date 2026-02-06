@@ -61,7 +61,7 @@ body {
   font-size: var(--my-font-size-2xl);
 }
 
-/* 圖層顏色類別 */
+/* 顏色類別 */
 .my-color-white {
   color: var(--my-color-white);
 }
@@ -160,7 +160,7 @@ body {
   letter-spacing: var(--my-letter-spacing-lg);
 }
 
-/* 圖層背景顏色類別  */
+/* 背景顏色類別 */
 .my-bgcolor-white {
   background-color: var(--my-color-white);
 }
