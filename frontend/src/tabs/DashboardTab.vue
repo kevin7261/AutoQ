@@ -81,12 +81,6 @@
    */
   import { useDataStore } from '@/stores/dataStore.js';
 
-  /**
-   * Google Sheets 工具函數引入
-   * 用於讀取 Google Sheets 數據
-   */
-  import { readGoogleSheetsData } from '@/utils/googleSheets.js';
-
   // ==================== 🏪 狀態管理初始化 (State Management Initialization) ====================
 
   /**
@@ -142,87 +136,6 @@
       groupName: groupName,
       layerName: layer.layerName,
     };
-  };
-
-  /**
-   * 🕐 格式化本地時間 (Format Local Time)
-   * 將時間戳轉換為本地時間格式
-   * 支援多種日期格式：ISO 字符串、時間戳、Google Sheets 日期格式等
-   */
-  const formatLocalTime = (timestamp) => {
-    if (!timestamp) return '';
-    
-    // 如果是空字符串，返回空
-    if (typeof timestamp === 'string' && timestamp.trim() === '') {
-      return '';
-    }
-    
-    // 嘗試解析日期
-    let date;
-    
-    // 如果是字符串，嘗試多種格式
-    if (typeof timestamp === 'string') {
-      // 移除前後空格
-      const trimmed = timestamp.trim();
-      
-      // 方法 1: 嘗試直接解析（適用於 ISO 格式）
-      date = new Date(trimmed);
-      
-      // 方法 2: 如果無效，嘗試解析 Google Sheets 常見格式
-      if (isNaN(date.getTime())) {
-        // Google Sheets 日期格式可能是：2026/1/25 14:30:45 或 2026-01-25 14:30:45
-        // 嘗試替換斜線為橫線
-        const normalized = trimmed.replace(/\//g, '-');
-        date = new Date(normalized);
-      }
-      
-      // 方法 3: 如果還是無效，嘗試解析為本地時間格式
-      if (isNaN(date.getTime())) {
-        // 嘗試解析格式：YYYY/MM/DD HH:MM:SS 或 YYYY-MM-DD HH:MM:SS
-        const match = trimmed.match(/(\d{4})[/-](\d{1,2})[/-](\d{1,2})\s+(\d{1,2}):(\d{1,2}):(\d{1,2})/);
-        if (match) {
-          const [, year, month, day, hour, minute, second] = match;
-          date = new Date(
-            parseInt(year),
-            parseInt(month) - 1,
-            parseInt(day),
-            parseInt(hour) || 0,
-            parseInt(minute) || 0,
-            parseInt(second) || 0
-          );
-        }
-      }
-      
-      // 方法 4: 嘗試解析只有日期的格式
-      if (isNaN(date.getTime())) {
-        const dateMatch = trimmed.match(/(\d{4})[/-](\d{1,2})[/-](\d{1,2})/);
-        if (dateMatch) {
-          const [, year, month, day] = dateMatch;
-          date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
-        }
-      }
-    } else {
-      // 如果是數字或其他類型，直接創建 Date 對象
-      date = new Date(timestamp);
-    }
-    
-    // 檢查日期是否有效
-    if (isNaN(date.getTime())) {
-      // 如果無法解析，返回原始值（讓用戶看到實際內容）
-      console.warn('無法解析日期:', timestamp);
-      return timestamp;
-    }
-    
-    // 格式化為本地時間
-    return date.toLocaleString('zh-TW', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      hour12: false,
-    });
   };
 
   /**
@@ -331,38 +244,6 @@
     { deep: true, immediate: true }
   );
 
-  // ==================== 📊 Google Sheets 數據管理 ====================
-
-  /**
-   * Google Sheets 數據狀態
-   */
-  const googleSheetsData = ref([]);
-  const isLoadingSheets = ref(false);
-  const sheetsError = ref(null);
-  const lastUpdateTime = ref(null);
-
-  /**
-   * 📥 讀取 Google Sheets 數據
-   */
-  const loadGoogleSheetsData = async () => {
-    isLoadingSheets.value = true;
-    sheetsError.value = null;
-
-    try {
-      console.log('🔄 開始讀取 Google Sheets 數據...');
-      const data = await readGoogleSheetsData();
-      googleSheetsData.value = data;
-      lastUpdateTime.value = new Date();
-      console.log('✅ Google Sheets 數據讀取成功，共', data.length, '筆');
-    } catch (error) {
-      console.error('❌ 讀取 Google Sheets 失敗:', error);
-      sheetsError.value = error.message || '讀取失敗';
-      googleSheetsData.value = [];
-    } finally {
-      isLoadingSheets.value = false;
-    }
-  };
-
   /**
    * 🚀 組件掛載事件 (Component Mounted Event)
    */
@@ -372,7 +253,6 @@
       activeLayerTab.value = visibleLayers.value[0].layerId;
       emit('active-layer-change', activeLayerTab.value);
     }
-    // 注意：不自動載入 Google Sheets，需要用戶點擊按鈕
   });
 </script>
 
@@ -429,67 +309,6 @@
         </div>
       </div>
 
-      <!-- 📊 Google Sheets 題目數據區塊 -->
-      <div class="border-top mt-4 pt-4">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-          <h5 class="my-title-md-black mb-0">📋 題目記錄 (Google Sheets)</h5>
-          <div class="d-flex align-items-center gap-2">
-            <span v-if="lastUpdateTime" class="my-title-xs-gray">
-              最後更新: {{ formatLocalTime(lastUpdateTime) }}
-            </span>
-            <button
-              class="btn btn-primary btn-sm"
-              @click="loadGoogleSheetsData"
-              :disabled="isLoadingSheets"
-            >
-              <span v-if="isLoadingSheets">
-                <span class="spinner-border spinner-border-sm me-1" role="status"></span>
-                讀取中...
-              </span>
-              <span v-else>🔄 更新資料</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- 錯誤訊息 -->
-        <div v-if="sheetsError" class="alert alert-danger" role="alert">
-          <strong>❌ 讀取失敗：</strong>{{ sheetsError }}
-        </div>
-
-        <!-- 數據表格 -->
-        <div v-if="googleSheetsData.length > 0" class="table-responsive">
-          <table class="table table-striped table-hover">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th v-for="header in Object.keys(googleSheetsData[0])" :key="header">
-                  {{ header }}
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-            <tr v-for="(row, index) in googleSheetsData" :key="index">
-              <td>{{ index + 1 }}</td>
-              <td v-for="(value, key) in row" :key="key">
-                <div v-if="key === '題目內容' || key === 'hint'" class="text-break" style="max-width: 300px;">
-                  {{ value }}
-                </div>
-                <div v-else-if="key === '時間' || key === 'timestamp'">
-                  <span v-if="value && value.trim()">{{ formatLocalTime(value) }}</span>
-                  <span v-else class="text-muted">-</span>
-                </div>
-                <div v-else>{{ value }}</div>
-              </td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <!-- 空狀態 -->
-        <div v-else-if="!isLoadingSheets && !sheetsError" class="text-center py-5">
-          <div class="my-title-md-gray">尚未載入數據，請點擊「更新資料」按鈕</div>
-        </div>
-      </div>
     </template>
 
     <!-- 沒有開啟圖層時的空狀態 -->
