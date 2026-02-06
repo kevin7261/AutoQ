@@ -313,8 +313,91 @@
 
     <!-- 沒有開啟圖層時的空狀態 -->
     <div v-else class="flex-grow-1 d-flex align-items-center justify-content-center">
-      <div class="text-center">
-        <div class="my-title-md-gray p-3">沒有開啟的圖層</div>
+      <div class="text-center p-5">
+        <div class="my-title-md-gray mb-4">沒有開啟的圖層</div>
+        
+        <!-- 測試內容區域 -->
+        <div class="my-bgcolor-gray-100 rounded p-4 text-start">
+          <h6 class="my-title-sm-black mb-3">📊 儀表板測試內容</h6>
+          
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <div class="card">
+                <div class="card-body">
+                  <h6 class="card-title my-title-xs-gray">系統統計</h6>
+                  <div class="my-content-sm-black">
+                    <div class="d-flex justify-content-between mb-1">
+                      <span>已載入圖層：</span>
+                      <strong>0</strong>
+                    </div>
+                    <div class="d-flex justify-content-between mb-1">
+                      <span>數據點總數：</span>
+                      <strong>0</strong>
+                    </div>
+                    <div class="d-flex justify-content-between mb-1">
+                      <span>使用記憶體：</span>
+                      <strong>--</strong>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-md-6 mb-3">
+              <div class="card">
+                <div class="card-body">
+                  <h6 class="card-title my-title-xs-gray">分析摘要</h6>
+                  <div class="my-content-sm-black">
+                    <div class="d-flex justify-content-between mb-1">
+                      <span>地理範圍：</span>
+                      <strong>未定義</strong>
+                    </div>
+                    <div class="d-flex justify-content-between mb-1">
+                      <span>空間參考：</span>
+                      <strong>WGS84</strong>
+                    </div>
+                    <div class="d-flex justify-content-between mb-1">
+                      <span>最後更新：</span>
+                      <strong>--</strong>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <div class="my-title-xs-gray pb-2">📈 數據品質指標</div>
+            <div class="progress mb-2" style="height: 20px;">
+              <div class="progress-bar bg-success" role="progressbar" style="width: 85%">
+                完整性 85%
+              </div>
+            </div>
+            <div class="progress mb-2" style="height: 20px;">
+              <div class="progress-bar bg-info" role="progressbar" style="width: 92%">
+                準確性 92%
+              </div>
+            </div>
+            <div class="progress mb-3" style="height: 20px;">
+              <div class="progress-bar bg-warning" role="progressbar" style="width: 78%">
+                時效性 78%
+              </div>
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <div class="my-title-xs-gray pb-1">🔍 快速操作</div>
+            <div class="my-content-sm-black pb-1">
+              <button class="btn btn-sm btn-outline-primary me-2 mb-1">重新整理</button>
+              <button class="btn btn-sm btn-outline-success me-2 mb-1">匯出報告</button>
+              <button class="btn btn-sm btn-outline-info mb-1">設定警報</button>
+            </div>
+          </div>
+          
+          <div class="my-title-xs-gray">
+            💡 提示：載入圖層後，此區域將顯示詳細的統計圖表和分析結果
+          </div>
+        </div>
       </div>
     </div>
   </div>

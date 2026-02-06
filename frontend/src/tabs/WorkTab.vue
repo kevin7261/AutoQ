@@ -262,8 +262,46 @@
 
     <!-- 沒有開啟圖層時的空狀態 -->
     <div v-else class="flex-grow-1 d-flex align-items-center justify-content-center">
-      <div class="text-center">
-        <div class="my-title-md-gray p-3">沒有開啟的圖層</div>
+      <div class="text-center p-5">
+        <div class="my-title-md-gray mb-4">沒有開啟的圖層</div>
+        
+        <!-- 測試內容區域 -->
+        <div class="my-bgcolor-gray-100 rounded p-4 text-start">
+          <h6 class="my-title-sm-black mb-3">🔧 工作分頁測試內容</h6>
+          
+          <div class="mb-3">
+            <div class="my-title-xs-gray pb-1">當前工作狀態</div>
+            <div class="my-content-sm-black pb-1">準備中 - 等待圖層數據載入</div>
+          </div>
+          
+          <div class="mb-3">
+            <div class="my-title-xs-gray pb-1">支援的文件格式</div>
+            <div class="my-content-sm-black pb-1">GeoJSON, Shapefile, KML, CSV</div>
+          </div>
+          
+          <div class="mb-3">
+            <div class="my-title-xs-gray pb-1">工作區功能</div>
+            <div class="my-content-sm-black pb-1">
+              - 數據處理與分析<br>
+              - 圖層管理與編輯<br>
+              - 屬性查詢與篩選<br>
+              - 地理計算工具
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <div class="my-title-xs-gray pb-1">快速操作</div>
+            <div class="my-content-sm-black pb-1">
+              <button class="btn btn-sm btn-outline-primary me-2 mb-1">載入測試資料</button>
+              <button class="btn btn-sm btn-outline-success me-2 mb-1">執行分析</button>
+              <button class="btn btn-sm btn-outline-info mb-1">匯出結果</button>
+            </div>
+          </div>
+          
+          <div class="my-title-xs-gray">
+            💡 提示：載入圖層後，此區域將顯示圖層的工作資料和詳細資訊
+          </div>
+        </div>
       </div>
     </div>
   </div>
