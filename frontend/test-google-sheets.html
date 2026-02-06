@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google Sheets 寫入測試</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+    }
+    .test-section {
+      margin: 20px 0;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 5px;
+      background: #4285f4;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #357ae8;
+    }
+    #result {
+      margin-top: 20px;
+      padding: 10px;
+      background: #f5f5f5;
+      border-radius: 4px;
+      white-space: pre-wrap;
+      font-family: monospace;
+    }
+    .success {
+      color: green;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <h1>Google Sheets 寫入功能測試</h1>
+  
+  <div class="test-section">
+    <h2>1. 測試 Web App URL</h2>
+    <p>Web App URL: <code id="webAppUrl"></code></p>
+    <button onclick="testWebApp()">測試 Web App 連接</button>
+  </div>
+
+  <div class="test-section">
+    <h2>2. 測試寫入數據（JSON）</h2>
+    <button onclick="testWriteData()">測試寫入題目數據（JSON）</button>
+  </div>
+
+  <div class="test-section">
+    <h2>3. 測試寫入數據（表單數據 - 推薦）</h2>
+    <button onclick="testWriteDataFormData()">測試寫入題目數據（表單數據）</button>
+  </div>
+
+  <div id="result"></div>
+
+  <script>
+    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzswsKdfsh5oI1G2Ztjl6xBBgar2xJ0HYzW0z1LXsX0fsTQgtMJU_2XbWCv78Fbfx_B/exec';
+    
+    // 測試表單數據提交
+    async function testWriteDataFormData() {
+      const resultDiv = document.getElementById('result');
+      resultDiv.innerHTML = '🔄 使用表單數據寫入中...';
+      
+      const formData = new FormData();
+      formData.append('timestamp', new Date().toISOString());
+      formData.append('qtype', '測試題（表單數據）');
+      formData.append('level', '測試');
+      formData.append('question_content', '這是一個使用表單數據的測試題目');
+      formData.append('hint', '這是測試提示');
+      formData.append('target_filename', 'test.js');
+
+      try {
+        console.log('發送表單數據...');
+        
+        const response = await fetch(WEB_APP_URL, {
+          method: 'POST',
+          body: formData, // 使用 FormData，不設置 Content-Type
+        });
+
+        console.log('響應狀態:', response.status, response.statusText);
+        
+        const responseText = await response.text();
+        console.log('響應內容:', responseText);
+
+        let result;
+        try {
+          result = JSON.parse(responseText);
+        } catch (e) {
+          result = { success: response.ok || response.status === 0, message: responseText };
+        }
+
+        if (result.success) {
+          resultDiv.innerHTML = `<div class="success">✅ 表單數據寫入成功！</div>響應: ${JSON.stringify(result, null, 2)}<br><br>請檢查 Google Sheets 是否出現新數據。`;
+        } else {
+          resultDiv.innerHTML = `<div class="error">❌ 表單數據寫入失敗</div>錯誤: ${result.error || responseText}`;
+        }
+      } catch (error) {
+        console.error('錯誤:', error);
+        resultDiv.innerHTML = `<div class="error">❌ 發生錯誤</div>錯誤: ${error.message}<br><br>詳細信息請查看瀏覽器控制台（F12）。`;
+      }
+    }
+    
+    document.getElementById('webAppUrl').textContent = WEB_APP_URL;
+
+    async function testWebApp() {
+      const resultDiv = document.getElementById('result');
+      resultDiv.innerHTML = '🔄 測試中...';
+      
+      try {
+        // 測試 GET 請求（如果 Apps Script 有 doGet 函數）
+        const response = await fetch(WEB_APP_URL, {
+          method: 'GET',
+        });
+        
+        const text = await response.text();
+        resultDiv.innerHTML = `<div class="success">✅ GET 請求成功</div>響應: ${text}`;
+      } catch (error) {
+        resultDiv.innerHTML = `<div class="error">❌ GET 請求失敗</div>錯誤: ${error.message}`;
+      }
+    }
+
+    async function testWriteData() {
+      const resultDiv = document.getElementById('result');
+      resultDiv.innerHTML = '🔄 寫入中...';
+      
+      const testData = {
+        timestamp: new Date().toISOString(),
+        qtype: '測試題',
+        level: '測試',
+        question_content: '這是一個測試題目',
+        hint: '這是測試提示',
+        target_filename: 'test.js'
+      };
+
+      try {
+        console.log('發送數據:', testData);
+        
+        const response = await fetch(WEB_APP_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(testData),
+        });
+
+        console.log('響應狀態:', response.status, response.statusText);
+        
+        const responseText = await response.text();
+        console.log('響應內容:', responseText);
+
+        let result;
+        try {
+          result = JSON.parse(responseText);
+        } catch (e) {
+          result = { success: response.ok, message: responseText };
+        }
+
+        if (result.success) {
+          resultDiv.innerHTML = `<div class="success">✅ 寫入成功！</div>響應: ${JSON.stringify(result, null, 2)}<br><br>請檢查 Google Sheets 是否出現新數據。`;
+        } else {
+          resultDiv.innerHTML = `<div class="error">❌ 寫入失敗</div>錯誤: ${result.error || responseText}`;
+        }
+      } catch (error) {
+        console.error('錯誤:', error);
+        resultDiv.innerHTML = `<div class="error">❌ 發生錯誤</div>錯誤: ${error.message}<br><br>詳細信息請查看瀏覽器控制台（F12）。`;
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+fastapi
+uvicorn
+python-multipart
+pypdf
+docx2txt
+beautifulsoup4
+tiktoken
+faiss-cpu
+
+# --- LangChain 核心修正 (鎖定版本) ---
+# 這些版本號經過測試，確保 langchain.chains 存在
+langchain==0.2.11
+langchain-community==0.2.10
+langchain-openai==0.1.19
+langchain-text-splitters==0.2.2
+langchain-core==0.2.24
