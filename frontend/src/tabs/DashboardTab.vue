@@ -1,9 +1,5 @@
 <script setup>
-  /**
-   * 📊 DashboardTab.vue - 儀表板分頁組件
-   * @component DashboardTab
-   * @version 2.0.0
-   */
+/** 儀表板分頁內容。 */
 </script>
 
 <template>
@@ -11,7 +7,6 @@
     <div class="flex-grow-1 overflow-auto my-bgcolor-white p-4">
       <div class="my-bgcolor-gray-100 rounded p-4 text-start">
         <h6 class="my-title-sm-black mb-3">📊 儀表板</h6>
-
         <div class="d-flex">
           <div class="flex-grow-1 mb-3 me-2">
             <div class="card">
@@ -30,7 +25,6 @@
               </div>
             </div>
           </div>
-
           <div class="flex-grow-1 mb-3">
             <div class="card">
               <div class="card-body">
@@ -49,7 +43,6 @@
             </div>
           </div>
         </div>
-
         <div class="mb-3">
           <div class="my-title-xs-gray pb-2">📈 數據品質指標</div>
           <div class="progress mb-2" style="height: 20px">
@@ -62,7 +55,6 @@
             <div class="progress-bar bg-warning" role="progressbar" style="width: 78%">時效性 78%</div>
           </div>
         </div>
-
         <div class="mb-3">
           <div class="my-title-xs-gray pb-1">🔍 快速操作</div>
           <div class="my-content-sm-black pb-1">
@@ -75,5 +67,3 @@
     </div>
   </div>
 </template>
-
-<style scoped></style>
