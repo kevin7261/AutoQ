@@ -65,11 +65,7 @@
       subText=""
     />
 
-    <div v-if="$route.path !== '/'" class="h-100">
-      <router-view />
-    </div>
-
-    <div v-if="$route.path === '/'" class="h-100 d-flex flex-column">
+    <div class="h-100 d-flex flex-column">
       <header class="my-bgcolor-gray-100 p-3 border-bottom d-flex align-items-center justify-content-between">
         <h3 class="my-title-lg-black mb-0">AutoQ</h3>
         <div class="d-flex align-items-center gap-2">

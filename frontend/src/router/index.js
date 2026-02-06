@@ -1,15 +1,23 @@
 /**
- * 路由：/ → HomeView，beforeEach 設定 document.title。
+ * 路由：/login 登入頁、/main 主頁；/ 不再使用。
  */
 import { createRouter, createWebHistory } from 'vue-router';
+import LoginView from '../views/LoginView.vue';
 import HomeView from '../views/HomeView.vue';
 
 const routes = [
+  { path: '/', redirect: '/login' },
   {
-    path: '/',
-    name: 'Home',
+    path: '/login',
+    name: 'Login',
+    component: LoginView,
+    meta: { title: '登入 - AutoQ' },
+  },
+  {
+    path: '/main',
+    name: 'Main',
     component: HomeView,
-    meta: { title: 'AutoQ', requiresAuth: false },
+    meta: { title: 'AutoQ' },
   },
 ];
 
