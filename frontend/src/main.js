@@ -16,7 +16,6 @@
  * - Pinia - Vue 3 官方推薦的狀態管理庫
  * - Bootstrap 5 - 響應式 UI 框架
  * - Font Awesome - 圖示字體庫
- * - D3.js - 數據視覺化庫
  *
  * 架構設計 (Architecture Design):
  * - 採用 Composition API 提供更好的 TypeScript 支援

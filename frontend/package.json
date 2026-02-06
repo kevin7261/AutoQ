@@ -7,15 +7,12 @@
   "author": "Kevin Cheng <kevin7261@gmail.com>",
   "keywords": [
     "vue3",
-    "d3js",
     "bootstrap",
     "pinia",
     "spatial-analysis",
-    "dengue-fever",
     "visualization",
     "geospatial",
-    "responsive-design",
-    "schematic-map"
+    "responsive-design"
   ],
   "repository": {
     "type": "git",
@@ -40,7 +37,6 @@
     "@fortawesome/fontawesome-free": "^6.7.2",
     "bootstrap": "^5.3.0",
     "core-js": "^3.8.3",
-    "d3": "^7.8.0",
     "pinia": "^2.1.0",
     "vue": "^3.2.13",
     "vue-router": "^4.5.1"

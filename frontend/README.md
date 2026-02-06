@@ -173,8 +173,7 @@ autoq/
 │   ├── utils/           # 工具函數
 │   │   ├── dataProcessor.js  # 數據處理核心
 │   │   ├── gridMergeReduce.js
-│   │   ├── utils.js
-│   │   └── dataExecute/     # 數據執行模組
+│   │   └── utils.js
 │   ├── views/           # 頁面組件
 │   │   ├── HomeView.vue
 │   │   ├── LeftView.vue

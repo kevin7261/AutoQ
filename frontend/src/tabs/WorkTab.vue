@@ -192,12 +192,6 @@
     }
   });
 
-  /**
-   * 檢查是否為 test_layer (Check if current layer is test_layer)
-   */
-  const isTestLayer = computed(() => {
-    return activeLayerTab.value === 'test_layer';
-  });
 </script>
 
 <template>
@@ -233,13 +227,8 @@
 
     <!-- 有開啟圖層時的內容 -->
     <div v-if="visibleLayers.length > 0" class="flex-grow-1 overflow-auto my-bgcolor-white p-3">
-      <!-- test_layer：此功能已停用 -->
-      <div v-if="isTestLayer" class="p-4 text-center">
-        <div class="my-title-md-gray">此功能已停用</div>
-      </div>
-
-      <!-- 🧰 其他圖層：顯示圖層工作資料 -->
-      <div v-else>
+      <!-- 🧰 圖層工作資料 -->
+      <div>
         <!-- 🧰 當前圖層資訊 -->
         <div class="mb-4">
           <h5 class="my-title-md-black">{{ currentLayerName }}</h5>
@@ -265,9 +254,9 @@
       <div class="text-center p-5">
         <div class="my-title-md-gray mb-4">沒有開啟的圖層</div>
         
-        <!-- 測試內容區域 -->
+        <!-- 說明內容 -->
         <div class="my-bgcolor-gray-100 rounded p-4 text-start">
-          <h6 class="my-title-sm-black mb-3">🔧 工作分頁測試內容</h6>
+          <h6 class="my-title-sm-black mb-3">🔧 工作分頁</h6>
           
           <div class="mb-3">
             <div class="my-title-xs-gray pb-1">當前工作狀態</div>
@@ -292,7 +281,7 @@
           <div class="mb-3">
             <div class="my-title-xs-gray pb-1">快速操作</div>
             <div class="my-content-sm-black pb-1">
-              <button class="btn btn-sm btn-outline-primary me-2 mb-1">載入測試資料</button>
+              <button class="btn btn-sm btn-outline-primary me-2 mb-1">載入資料</button>
               <button class="btn btn-sm btn-outline-success me-2 mb-1">執行分析</button>
               <button class="btn btn-sm btn-outline-info mb-1">匯出結果</button>
             </div>

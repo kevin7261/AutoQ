@@ -42,7 +42,7 @@
  * - layers: 圖層配置和狀態陣列
  * - layerStates: 圖層狀態的詳細追蹤
  * - selectedFeature: 當前選中的地理要素
- * - d3jsDimensions: D3.js 視覺化組件的尺寸設定
+ * - d3jsDimensions: 視覺化組件的尺寸設定（保留供日後擴充）
  *
  * 🚀 使用範例 (Usage Examples):
  * ```javascript
@@ -52,7 +52,7 @@
  * const dataStore = useDataStore();
  *
  * // 切換圖層可見性
- * await dataStore.toggleLayerVisibility('test_layer');
+ * await dataStore.toggleLayerVisibility('layer_id');
  *
  * // 獲取可見圖層
  * const visibleLayers = dataStore.visibleLayers;
@@ -165,7 +165,7 @@ export const useDataStore = defineStore(
      * 完整的配置信息，包括載入方式、顯示設定、數據來源等。
      *
      * 圖層群組結構：
-     * - 測試圖層：包含網格示意圖測試等開發用圖層
+     * - 圖層群組與圖層配置
      *
      * 圖層屬性說明：
      * - layerId: 圖層唯一識別碼
@@ -191,34 +191,7 @@ export const useDataStore = defineStore(
      * @type {Ref<Array>} 圖層配置響應式陣列
      * @since 1.0.0
      */
-    const layers = ref([
-      {
-        groupName: '測試圖層',
-        groupLayers: [
-          {
-            layerId: 'test_layer',
-            layerName: '測試',
-            visible: false,
-            isLoading: false,
-            isLoaded: false,
-            colorName: 'green',
-            jsonData: null,
-            processedJsonData: null,
-            workData: null,
-            dashboardData: null,
-            dataTableData: null,
-            layerInfoData: null,
-            jsonLoader: null,
-            jsonFileName: null,
-            display: true,
-            upperViewTabs: [
-              'work',
-              'dashboard',
-            ],
-          },
-        ],
-      },
-    ]);
+    const layers = ref([]);
 
     /**
      * 💾 保存圖層狀態 (Save Layer State)
@@ -240,13 +213,13 @@ export const useDataStore = defineStore(
      * 🚀 使用範例 (Usage Examples):
      * ```javascript
      * // 更新圖層可見性
-     * saveLayerState('test_layer', { visible: true });
+     * saveLayerState('layer_id', { visible: true });
      *
      * // 更新圖層載入狀態
-     * saveLayerState('test_layer', { isLoading: true });
+     * saveLayerState('layer_id', { isLoading: true });
      *
      * // 更新圖層數據
-     * saveLayerState('test_layer', {
+     * saveLayerState('layer_id', {
      *   jsonData: data,
      *   dashboardData: summary,
      *   dataTableData: table,
@@ -269,7 +242,7 @@ export const useDataStore = defineStore(
      *
      * @example
      * // 基本用法
-     * saveLayerState('test_layer', { visible: true });
+     * saveLayerState('layer_id', { visible: true });
      *
      * @since 1.0.0
      */
@@ -303,7 +276,7 @@ export const useDataStore = defineStore(
      * 🚀 使用範例 (Usage Examples):
      * ```javascript
      * // 搜尋圖層
-     * const layer = findLayerById('test_layer');
+     * const layer = findLayerById('layer_id');
      * if (layer) {
      *   console.log('找到圖層:', layer.layerName);
      * } else {
@@ -311,13 +284,13 @@ export const useDataStore = defineStore(
      * }
      *
      * // 檢查圖層是否存在
-     * if (findLayerById('test_layer')) {
-     *   console.log('測試圖層存在');
+     * if (findLayerById('layer_id')) {
+     *   console.log('圖層存在');
      * }
      * ```
      *
      * 📊 搜尋範圍 (Search Scope):
-     * - 測試圖層群組：包含網格示意圖測試等開發用圖層
+     * - 所有圖層群組與圖層
      *
      * ⚠️ 注意事項 (Important Notes):
      * - 搜尋是線性的，大型圖層列表可能影響性能
@@ -329,7 +302,7 @@ export const useDataStore = defineStore(
      *
      * @example
      * // 基本用法
-     * const layer = findLayerById('test_layer');
+     * const layer = findLayerById('layer_id');
      * if (layer) {
      *   console.log(layer.layerName);
      * }
@@ -464,10 +437,10 @@ export const useDataStore = defineStore(
      * 🚀 使用範例 (Usage Examples):
      * ```javascript
      * // 開啟圖層
-     * await toggleLayerVisibility('test_layer');
+     * await toggleLayerVisibility('layer_id');
      *
      * // 關閉圖層
-     * await toggleLayerVisibility('test_layer');
+     * await toggleLayerVisibility('layer_id');
      *
      * // 在組件中使用
      * const handleLayerToggle = async (layerId) => {
@@ -504,7 +477,7 @@ export const useDataStore = defineStore(
      *
      * @example
      * // 基本用法
-     * await toggleLayerVisibility('test_layer');
+     * await toggleLayerVisibility('layer_id');
      *
      * @since 1.0.0
      * @see {@link findLayerById} 圖層搜尋函數
@@ -557,18 +530,6 @@ export const useDataStore = defineStore(
             result.spaceNetworkGridJsonData ?? layer.spaceNetworkGridJsonData;
           // layoutGridJsonData：版面網格專用資料欄位
           layer.layoutGridJsonData = result.layoutGridJsonData ?? layer.layoutGridJsonData;
-          // layoutGridJsonData_Test：版面網格測試專用資料欄位
-          layer.layoutGridJsonData_Test =
-            result.layoutGridJsonData_Test ?? layer.layoutGridJsonData_Test;
-          // layoutGridJsonData_Test2：版面網格測試2專用資料欄位
-          layer.layoutGridJsonData_Test2 =
-            result.layoutGridJsonData_Test2 ?? layer.layoutGridJsonData_Test2;
-          // layoutGridJsonData_Test3：版面網格測試3專用資料欄位
-          layer.layoutGridJsonData_Test3 =
-            result.layoutGridJsonData_Test3 ?? layer.layoutGridJsonData_Test3;
-          // layoutGridJsonData_Test4：版面網格測試4專用資料欄位
-          layer.layoutGridJsonData_Test4 =
-            result.layoutGridJsonData_Test4 ?? layer.layoutGridJsonData_Test4;
           layer.processedJsonData = result.processedJsonData;
           layer.geojsonData = result.geojsonData || null; // 如果有 geojsonData，則保存
           layer.dataTableData = result.dataTableData;
@@ -588,9 +549,6 @@ export const useDataStore = defineStore(
             jsonData: layer.jsonData,
             spaceNetworkGridJsonData: layer.spaceNetworkGridJsonData,
             layoutGridJsonData: layer.layoutGridJsonData,
-            layoutGridJsonData_Test: layer.layoutGridJsonData_Test,
-            layoutGridJsonData_Test2: layer.layoutGridJsonData_Test2,
-            layoutGridJsonData_Test3: layer.layoutGridJsonData_Test3,
             processedJsonData: layer.processedJsonData,
             geojsonData: layer.geojsonData,
             drawJsonData: layer.drawJsonData,
@@ -644,186 +602,6 @@ export const useDataStore = defineStore(
       };
     };
 
-    // ==================== LayoutGridTab_Test2 尺寸管理 ====================
-
-    // LayoutGridTab_Test2 當前尺寸（以 pt 為單位）
-    const layoutGridTabTest2Dimensions = ref({
-      x: 0, // 寬度（pt）
-      y: 0, // 高度（pt）
-    });
-
-    // 更新 LayoutGridTab_Test2 尺寸
-    const updateLayoutGridTabTest2Dimensions = (x, y) => {
-      layoutGridTabTest2Dimensions.value = {
-        x: Math.round(x),
-        y: Math.round(y),
-      };
-    };
-
-    // LayoutGridTab_Test2 網格最小尺寸（以 pt 為單位）
-    const layoutGridTabTest2MinCellDimensions = ref({
-      minWidth: 0, // 最小寬度（pt）
-      minHeight: 0, // 最小高度（pt）
-    });
-
-    // 更新 LayoutGridTab_Test2 網格最小尺寸
-    const updateLayoutGridTabTest2MinCellDimensions = (minWidth, minHeight) => {
-      layoutGridTabTest2MinCellDimensions.value = {
-        minWidth: Math.round(minWidth),
-        minHeight: Math.round(minHeight),
-      };
-    };
-
-    // LayoutGridTab_Test3 尺寸（以 pt 為單位）
-    const layoutGridTabTest3Dimensions = ref({
-      x: 0, // 寬度（pt）
-      y: 0, // 高度（pt）
-    });
-
-    // 更新 LayoutGridTab_Test3 尺寸
-    const updateLayoutGridTabTest3Dimensions = (x, y) => {
-      layoutGridTabTest3Dimensions.value = {
-        x: Math.round(x),
-        y: Math.round(y),
-      };
-    };
-
-    // LayoutGridTab_Test3 網格最小尺寸（以 pt 為單位）
-    const layoutGridTabTest3MinCellDimensions = ref({
-      minWidth: 0, // 最小寬度（pt）
-      minHeight: 0, // 最小高度（pt）
-    });
-
-    // 更新 LayoutGridTab_Test3 網格最小尺寸
-    const updateLayoutGridTabTest3MinCellDimensions = (minWidth, minHeight) => {
-      layoutGridTabTest3MinCellDimensions.value = {
-        minWidth: Math.round(minWidth),
-        minHeight: Math.round(minHeight),
-      };
-    };
-
-    // LayoutGridTab_Test4 當前尺寸（以 pt 為單位）
-    const layoutGridTabTest4Dimensions = ref({
-      x: 0, // 寬度（pt）
-      y: 0, // 高度（pt）
-    });
-
-    // 更新 LayoutGridTab_Test4 尺寸
-    const updateLayoutGridTabTest4Dimensions = (x, y) => {
-      layoutGridTabTest4Dimensions.value = {
-        x: Math.round(x),
-        y: Math.round(y),
-      };
-    };
-
-    // LayoutGridTab_Test4 網格最小尺寸（以 pt 為單位）
-    const layoutGridTabTest4MinCellDimensions = ref({
-      minWidth: 0, // 最小寬度（pt）
-      minHeight: 0, // 最小高度（pt）
-    });
-
-    // ==================== LayoutGridTab_Test4 顯示控制（ControlTab 開關） ====================
-    // 顯示權重（預設顯示；開啟才顯示 LayoutGridTab_Test4 的權重數字）
-    const showWeightLabels = ref(true);
-    const setShowWeightLabels = (value) => {
-      showWeightLabels.value = !!value;
-    };
-
-    // 顯示粗細（預設不變化；開啟才依權重改變 route 粗細）
-    const showRouteThickness = ref(false);
-    const setShowRouteThickness = (value) => {
-      showRouteThickness.value = !!value;
-    };
-
-    // 權重放大（預設等寬等高；開啟才依權重比例改變網格長寬）
-    const enableWeightScaling = ref(false);
-    const setEnableWeightScaling = (value) => {
-      enableWeightScaling.value = !!value;
-    };
-
-    // 顯示網格（預設開啟；開啟才顯示網格線）
-    const showGrid = ref(true);
-    const setShowGrid = (value) => {
-      showGrid.value = !!value;
-    };
-
-    // 顯示站名（預設關閉；開啟才顯示紅點車站的站名）
-    const showStationNames = ref(false);
-    const setShowStationNames = (value) => {
-      showStationNames.value = !!value;
-    };
-
-    // 當前執行的合併操作（用於在 ControlTab 中顯示）
-    const currentMergeOperation4 = ref(null);
-
-    // 更新 LayoutGridTab_Test4 網格最小尺寸
-    const updateLayoutGridTabTest4MinCellDimensions = (minWidth, minHeight) => {
-      layoutGridTabTest4MinCellDimensions.value = {
-        minWidth: Math.round(minWidth),
-        minHeight: Math.round(minHeight),
-      };
-    };
-
-    // 設置當前執行的合併操作
-    const setCurrentMergeOperation4 = (operation) => {
-      currentMergeOperation4.value = operation;
-    };
-
-    // 清除當前執行的合併操作
-    const clearCurrentMergeOperation4 = () => {
-      currentMergeOperation4.value = null;
-    };
-
-    // 自動合併閾值（預設 5pt，當網格最小寬度或高度小於此值時觸發合併）
-    const autoMergeThreshold = ref(5);
-    const setAutoMergeThreshold = (value) => {
-      const numValue = Number(value);
-      if (!isNaN(numValue) && numValue > 0) {
-        autoMergeThreshold.value = numValue;
-      }
-    };
-
-    // 權重放大倍數（預設 5，開啟權重放大時使用此倍數）
-    const weightScalingMultiplier = ref(5);
-    const setWeightScalingMultiplier = (value) => {
-      const numValue = Number(value);
-      if (!isNaN(numValue) && numValue > 0) {
-        weightScalingMultiplier.value = numValue;
-      }
-    };
-
-    // LayoutGridTab_Test4 當前滑鼠網格座標
-    const layoutGridTabTest4MouseGridCoordinate = ref({
-      x: null, // 網格 X 座標
-      y: null, // 網格 Y 座標
-    });
-
-    // 更新 LayoutGridTab_Test4 滑鼠網格座標
-    const updateLayoutGridTabTest4MouseGridCoordinate = (x, y) => {
-      layoutGridTabTest4MouseGridCoordinate.value = {
-        x: x !== null && x !== undefined ? Math.round(x) : null, // 網格座標為整數
-        y: y !== null && y !== undefined ? Math.round(y) : null, // 網格座標為整數
-      };
-    };
-
-    // 清除 LayoutGridTab_Test4 滑鼠網格座標
-    const clearLayoutGridTabTest4MouseGridCoordinate = () => {
-      layoutGridTabTest4MouseGridCoordinate.value = {
-        x: null,
-        y: null,
-      };
-    };
-
-    // 權重縮放指數（預設 2，用於非線性縮放：值越大，最大值和最小值的差異越大）
-    // 例如：指數 = 2 時，maxVal=1 -> weightedValue=1，maxVal=3 -> weightedValue=9，maxVal=5 -> weightedValue=25
-    const weightScalingExponent = ref(2);
-    const setWeightScalingExponent = (value) => {
-      const numValue = Number(value);
-      if (!isNaN(numValue) && numValue > 0) {
-        weightScalingExponent.value = numValue;
-      }
-    };
-
     const setSelectedFeature = (feature) => {
       // 記錄選取變化的log
       selectedFeature.value = feature;
@@ -870,14 +648,6 @@ export const useDataStore = defineStore(
           layer.spaceNetworkGridJsonData =
             result.spaceNetworkGridJsonData ?? layer.spaceNetworkGridJsonData;
           layer.layoutGridJsonData = result.layoutGridJsonData ?? layer.layoutGridJsonData;
-          layer.layoutGridJsonData_Test =
-            result.layoutGridJsonData_Test ?? layer.layoutGridJsonData_Test;
-          layer.layoutGridJsonData_Test2 =
-            result.layoutGridJsonData_Test2 ?? layer.layoutGridJsonData_Test2;
-          layer.layoutGridJsonData_Test3 =
-            result.layoutGridJsonData_Test3 ?? layer.layoutGridJsonData_Test3;
-          layer.layoutGridJsonData_Test4 =
-            result.layoutGridJsonData_Test4 ?? layer.layoutGridJsonData_Test4;
           layer.geojsonData = result.geojsonData ?? layer.geojsonData;
           layer.processedJsonData = result.processedJsonData ?? layer.processedJsonData;
           layer.drawJsonData = result.drawJsonData ?? layer.drawJsonData;
@@ -938,48 +708,6 @@ export const useDataStore = defineStore(
       d3jsDimensions,
       updateD3jsDimensions,
       updateComputedGridState,
-      // LayoutGridTab_Test2 尺寸管理
-      layoutGridTabTest2Dimensions,
-      updateLayoutGridTabTest2Dimensions,
-      layoutGridTabTest2MinCellDimensions,
-      updateLayoutGridTabTest2MinCellDimensions,
-      // LayoutGridTab_Test3 尺寸管理
-      layoutGridTabTest3Dimensions,
-      updateLayoutGridTabTest3Dimensions,
-      layoutGridTabTest3MinCellDimensions,
-      updateLayoutGridTabTest3MinCellDimensions,
-      // LayoutGridTab_Test4 尺寸管理
-      layoutGridTabTest4Dimensions,
-      updateLayoutGridTabTest4Dimensions,
-      layoutGridTabTest4MinCellDimensions,
-      updateLayoutGridTabTest4MinCellDimensions,
-      // LayoutGridTab_Test4 滑鼠網格座標
-      layoutGridTabTest4MouseGridCoordinate,
-      updateLayoutGridTabTest4MouseGridCoordinate,
-      clearLayoutGridTabTest4MouseGridCoordinate,
-      // LayoutGridTab_Test4 開關
-      showWeightLabels,
-      setShowWeightLabels,
-      showRouteThickness,
-      setShowRouteThickness,
-      enableWeightScaling,
-      setEnableWeightScaling,
-      showGrid,
-      setShowGrid,
-      showStationNames,
-      setShowStationNames,
-      currentMergeOperation4,
-      setCurrentMergeOperation4,
-      clearCurrentMergeOperation4,
-      // 自動合併閾值
-      autoMergeThreshold,
-      setAutoMergeThreshold,
-      // 權重縮放指數
-      weightScalingExponent,
-      setWeightScalingExponent,
-      // 權重放大倍數
-      weightScalingMultiplier,
-      setWeightScalingMultiplier,
     };
   },
   {

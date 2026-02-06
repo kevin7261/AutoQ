@@ -316,9 +316,9 @@
       <div class="text-center p-5">
         <div class="my-title-md-gray mb-4">沒有開啟的圖層</div>
         
-        <!-- 測試內容區域 -->
+        <!-- 說明內容 -->
         <div class="my-bgcolor-gray-100 rounded p-4 text-start">
-          <h6 class="my-title-sm-black mb-3">📊 儀表板測試內容</h6>
+          <h6 class="my-title-sm-black mb-3">📊 儀表板</h6>
           
           <div class="row">
             <div class="col-md-6 mb-3">
